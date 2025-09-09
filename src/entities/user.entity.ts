@@ -12,6 +12,7 @@ export class User {
   @Column({ unique: true }) // 이메일은 고유값으로 설정
   email: string;
 
+  //1:N = User:Post
   @OneToMany(() => Post, (post) => post.user) // 1:N 관계
   posts: Post[];
 }

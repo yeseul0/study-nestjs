@@ -1,10 +1,12 @@
 import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
+// import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { User } from '../entities/user.entity';
 
+// @ApiTags('users') // Swagger에서 그룹핑
 @Controller('users') // 'users' 경로에 대한 요청 처리
 export class UserController {
-  constructor(private readonly userService: UserService) {} // UserService 주입 
+  constructor(private readonly userService: UserService) {} // UserService 주입
 
   @Get() // 모든 User 조회
   async findAll(): Promise<User[]> {
