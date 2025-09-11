@@ -21,6 +21,12 @@ export class PostController {
     return await this.postService.findAll();
   }
 
+  // 1-1. 특정 사용자가 작성한 모든 게시글 조회
+  @Get('user/:userId')
+  async findByUserId(@Param('userId') userId: number): Promise<Post[]> {
+    return await this.postService.findByUserId(userId);
+  }
+
   // 2. 특정 게시글 조회 (ID로)
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<Post> {

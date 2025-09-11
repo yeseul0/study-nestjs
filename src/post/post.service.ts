@@ -24,6 +24,15 @@ export class PostService {
     });
   }
 
+  // 2-1. 특정 사용자가 작성한 모든 게시글 조회
+  async findByUserId(userId: number): Promise<Post[]> {
+    return this.postRepository.find({
+      where: { user: { id: userId } }, // Post 엔티티의 user 필드(User)를 참조하며, 그 안에서 id(=user.id)가 userId인 데이터
+      relations: ['user'], // 작성자 정보도 함께
+      order: { id: 'DESC' }, // 최신 글부터
+    });
+  }
+
   // 3. 게시글 생성
   async create(postData: Partial<Post>, user: User): Promise<Post> {
     const newPost = this.postRepository.create({ ...postData, user }); // 작성자 정보 포함
