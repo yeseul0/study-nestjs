@@ -35,7 +35,7 @@ export class PostService {
     const post = await this.findOne(id); // 기존 게시글 조회
     if (!post) throw new Error('Post not found'); // 게시글이 없으면 예외 처리
 
-    Object.assign(post, updateData); // updateData 객체 속성이 post 객체에 복사됨
+    Object.assign(post, updateData); // updateData 객체 겹치는 속성이 post 객체에 복사됨
     return await this.postRepository.save(post); // 저장 후 반환
   }
 

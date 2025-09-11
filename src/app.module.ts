@@ -7,6 +7,7 @@ import * as dotenv from 'dotenv';
 import { User } from './entities/user.entity';
 import { Post } from './entities/post.entity';
 import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ dotenv.config();
     }),
     //TypeOrmModule.forFeature([User]), // entityManager 대신 Repository 클래스 사용.  특정 엔티티를 모듈에 등록 (리포지토리 사용 가능).. 아직 잘 모르겠음. 왜 하는지
     UserModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
