@@ -1,9 +1,22 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Global ValidationPipe 설정
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // DTO에 없는 속성 제거
+      forbidNonWhitelisted: true, // DTO에 없는 속성 있으면 에러
+      transform: true, // 자동 타입 변환 (string -> number 등)
+      transformOptions: {
+        enableImplicitConversion: true, // 암묵적 타입 변환 활성화
+      },
+    }),
+  );
 
   // Swagger 설정
   const config = new DocumentBuilder()

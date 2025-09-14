@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { User } from '../entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 /* EntityManager VS Repository
     Repository 패턴을 사용하지 않고 EntityManager를 직접 사용..
@@ -25,14 +27,23 @@ export class UserService {
   }
 
   // 사용자 생성
-  async create(userData: Partial<User>): Promise<User> {
-    const user = this.entityManager.create(User, userData); // User 엔티티 생성
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = this.entityManager.create(User, createUserDto); // User 엔티티 생성
     return this.entityManager.save(User, user); // 데이터 저장
   }
 
   // 특정 사용자 조회
   async findOne(id: number): Promise<User> {
     return this.entityManager.findOne(User, { where: { id } }); // ID로 사용자 조회
+  }
+
+  // 사용자 수정
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = await this.findOne(id); // 기존 사용자 조회
+    if (!user) throw new Error('User not found'); // 사용자가 없으면 에러
+
+    Object.assign(user, updateUserDto); // DTO의 데이터를 user 객체에 병합
+    return this.entityManager.save(User, user); // 수정된 데이터 저장
   }
 
   // 사용자 삭제

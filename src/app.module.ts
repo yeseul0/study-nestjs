@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
@@ -8,6 +9,7 @@ import { User } from './entities/user.entity';
 import { Post } from './entities/post.entity';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
+import { MusicModule } from './music/music.module';
 
 dotenv.config();
 
@@ -24,9 +26,13 @@ dotenv.config();
       synchronize: true, // 개발 환경에서만 사용, 실제 운영 환경에서는 false로 설정
       logging: true, // 쿼리 로깅 활성화
     }),
-    //TypeOrmModule.forFeature([User]), // entityManager 대신 Repository 클래스 사용.  특정 엔티티를 모듈에 등록 (리포지토리 사용 가능).. 아직 잘 모르겠음. 왜 하는지
+    ConfigModule.forRoot({
+      isGlobal: true, // 어디서든지 import 없이 사용 가능
+    }),
+    //TypeOrmModule.forFeature([User]), // entityManager 대신 Repository 클래스 사용.  특정 엔티티를 모듈에 등록 (리포지토리 사용 가능?).. 아직 잘 모르겠음. 왜 하는지
     UserModule,
     PostModule,
+    MusicModule,
   ],
   controllers: [AppController],
   providers: [AppService],
