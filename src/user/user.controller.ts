@@ -1,4 +1,4 @@
-// 주석
+// 주
 import {
   Controller,
   Get,
