@@ -1,4 +1,4 @@
-// 주석주석 야호
+// 주석주석 야
 import {
   Controller,
   Get,
